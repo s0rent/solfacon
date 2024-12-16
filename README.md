@@ -7,6 +7,7 @@ Feature highlights:
 * Low-light operation / assisted fan start
 * Adjustable max fan speed - PWM duty cycle calculated on the basis of available voltage and desired fan speed
 * Directly connect 1 or 2 fans
+* LDO / switch mode combo power supply for efficient low and high voltage regulation
 * Easy assembly in standard enclosure
 * Operating temperatures from -20°C to 50°C
 * Easy to configure, modify and hack
