@@ -4,10 +4,10 @@
 <body>
 <div id="page">
 <h1>Solar Fan Controller - SOLFACON</h1>
-<h3 style="text-align: center;">An efficient computer controlled multi-fan controller designed for solar powered sustainable / off-grid ventilation</h3>
+<h3 style="text-align: center;">An efficient fan controller designed for solar powered sustainable / off-grid ventilation</h3>
 <center><img src="enclosure_example1.jpg" style="width:800px"></center>
 <p>
-While having a fan controller for solar powered ventilation is not a strict necessity, it can vastly improve on important parameters such as how often and how long the fan is running. If you have ever connected a spare fan to a solar panel for some cheap ventilation, you might already have experienced some of the potential pitfalls. 
+While having a fan controller for solar powered ventilation is not a strict necessity, it can vastly improve on important parameters such as how often and how long the fan is running. If you have ever connected a fan to a solar panel, you might already have experienced some of the potential pitfalls:
 
 <ul>
     <li><strong>The fan does not start</strong><br>
@@ -29,10 +29,10 @@ While having a fan controller for solar powered ventilation is not a strict nece
     </li><br>
     
     <li><strong>Short fan lifespan</strong><br>
-    In addition to increased wear from frequent start/stop cycles and overvoltage, the fan can also stall fully or partially at low voltages. Some fans have built-in stall protection mechanisms, but if the fan is only partially stalled or not receiving enough power for the stall protection to work, it can wear down prematurely.
+    In addition to increased wear from frequent start/stop cycles and over-voltage, the fan can also stall fully or partially at low voltages. Some fans have built-in stall protection mechanisms, but if the fan is only partially stalled or not receiving enough power for the stall protection to work, it can wear down prematurely.
     </li><br>
 </ul>
-This controller is designed to address all of the above problems, and you can build your own for 20-40€. 
+This controller is designed to address all of the above problems, and you can build your own for 20-40€ depending on which features you want. 
 </p>
 <p>
 Feature overview:
@@ -42,7 +42,7 @@ Feature overview:
     <li><strong>Adjustable max fan speed</strong> (optional)<br>
     Set a maximum speed according to your needs or preferences. The controller measures the available power and adjusts the fan speed via PWM accordingly. Only usable with 4-pin PWM fans.</li><br>
     <li><strong>Works with standard 3-pin and 4-pin 12V PC fans</strong><br>
-    Reuse what you have or buy a new inexpensive fan.</li><br>
+    Reuse what you have or buy a new inexpensive fan. 4-pin fans are recommended as they support PWM directly.</li><br>
     <li><strong>Directly connect and control 1 or 2 fans</strong><br>
     Depending on the solar panel, you can configure the controller to power fans up to 6W total.</li><br>
     <li><strong>On-off switch</strong> (optional)<br>
@@ -123,7 +123,7 @@ Connect a temperature sensor to pin 1 or 5, and modify the source code to read t
     The recommended maximum continuous current draw for all fans combined is ~500mA. For loads of this size, it is recommended to increase the capacity of the super capacitors to 1F to support the additional current requirement. The super capacitors' peak charging rate is circa 200mA, and the LDO and switching converter is rated up to 1A, but some headroom should reserved for the extra current consumptions that occurs when the fans start from 0 RPM, which is often well above their regular current draw. The regulators can handle short current spikes above 1A, but is not recommended indefinitely for reliability and durability reasons. </li><br>
     
     <li><strong>How does the controller manage the extra current draw when the fan starts up, especially with multiple fans?</strong><br>
-    Fans do not start until the 12V rail is above 11V, and they run at 20% speed for the first three seconds. The super capacitors can also supplement the current to ensure smooth fan startup without causing dropout or stalling.</li><br>
+    Fans do not start until the 12V rail is above 11V, and PWM enabled fans only run at 20% speed for the first three seconds. The super capacitors can also supplement the current to ensure smooth fan startup without causing dropout or stalling.</li><br>
     
     <li><strong>What safeguards are in place to prevent overheating or component damage if the fan stalls or the controller experiences high temperatures?</strong><br>
     For temperature, the controller should not be placed in direct sunlight but it should be good for ambient temperatures up to approximately 50°C (NB: estimated through enclosure and heat dissipation calculations, but not tested). The controller is designed for high efficiency and low heat dissipation. Arctic P12 fans have built-in stall protection that prevents damage if they are blocked.</li><br>
