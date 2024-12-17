@@ -39,7 +39,7 @@ Please read through the whole page before you start assembling the controller. I
 
 
 <h2>Components</h2>
-The list of components excluding the PCB. You can choose to use alternative components to the ones listed here, for instance if you have comparable parts available. Pay attention to the dimensions of the components - especially the height if you plan to mount the PCB in an F19 enclosure.
+You can choose to use alternative components to the ones listed here, for instance if you have similar parts available. Pay attention to the dimensions of the components - especially the height if you plan to mount the PCB in an F19 enclosure.
 
 <table id="component-list">
     <tr>
@@ -368,7 +368,7 @@ In the code, set "lowPowerOperationEnabled" to false.<br>
         <input type="number" id="50-100" value="1210"><br>
         <br>
         Fan ON voltage threshold:<br>
-        <input type="number" id="fanOnVoltage" value="11"> <span class="note">Above this voltage the van will turn on, and in adaptive mode the controller will try to maintain a voltage above this level.</span><br>
+        <input type="number" id="fanOnVoltage" value="11"> <span class="note">Above this voltage the fan will turn on, and in adaptive mode the controller will try to maintain a voltage above this level.</span><br>
         <br>
         Fan OFF voltage threshold:<br>
         <input type="number" id="fanOffVoltage" value="4"> <span class="note">Below this voltage the fan will turn off. Put it a little above where the fan stops naturally, in order to prevent under-voltage stall.</span><br>
@@ -380,7 +380,7 @@ In the code, set "lowPowerOperationEnabled" to false.<br>
         <input type="number" id="minPwmSpeed" value="40"> <span class="note">The lowest fan speed that you would like to be able to set. Note that some fans turn off when below a certain speed.</span><br>
         <br>
         Maximum reliable PWM duty cycle (%):<br>
-        <input type="number" id="maxPwmSpeed" value="94"> <span class="note">As the pulse width decreases, many fans cannot distinguish between e.g. 95% and 100% duty cycle, which can cause audible speed fluctuations. Additionally, the voltage regulators are not guaranteed to output 12V and the output diodes cause a little voltage drop, so putting a value below 100% gives a little headroom to maintain a steady RPM.</span><br>
+        <input type="number" id="maxPwmSpeed" value="94"> <span class="note">As the pulse width increases, many fans cannot distinguish between e.g. 95% and 100% duty cycle, which can cause audible speed fluctuations.</span><br>
         <br>
         
         <button onclick="calculateFanCurve()">CALCULATE</button><br>

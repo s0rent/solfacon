@@ -38,7 +38,7 @@ This controller is designed to address all of the above problems, and you can bu
 Feature overview:
 <ul>
     <li><strong>Low light operation and assisted fan start</strong> (optional)<br>
-    Would you like your fan to work at least periodically in cloudy weather, or is it not possible for you to place a solar panel in direct sun at the perfect angle at all times? This controller compensates for low power scenarios by using what ever power is available to charge two super capacitors, and use this energy to kick start the fans or keep them running temporarily. One fan can run for more than 1½ minute on the stored energy.</li><br>
+    This controller compensates for low power scenarios, whether due to partial clouds or sub-optimal solar panel placement, by using what ever power is available to charge two super capacitors, and use this energy to kick start the fans or keep them running temporarily. One fan can run for more than 1½ minute on the stored energy even if there is not enough power to keep the fan running constantly.</li><br>
     <li><strong>Adjustable max fan speed</strong> (optional)<br>
     Set a maximum speed according to your needs or preferences. The controller measures the available power and adjusts the fan speed via PWM accordingly. Only usable with 4-pin PWM fans.</li><br>
     <li><strong>Works with standard 3-pin and 4-pin 12V PC fans</strong><br>
@@ -48,7 +48,7 @@ Feature overview:
     <li><strong>On-off switch</strong> (optional)<br>
     Start and stop the ventilation system with ease.</li><br>
     <li><strong>PCB shaped to fit into compact black, beige or grey standard enclosure</strong> (optional)<br>
-    Protect the components from dust and yourself from electric shock. Not intended for direct exposure to rain or sunlight.</li><br>
+    Protect the components from dust and yourself from electric shock.</li><br>
     <li><strong>PCB doubles as stencil for drilling enclosure holes</strong><br>
     No need to meticulously measure component clearances or alignment to make a nice looking front panel.</li><br>
     <li><strong>High quality components</strong><br>
@@ -91,7 +91,7 @@ Connect a temperature sensor to pin 1 or 5, and modify the source code to read t
     The LDO handles low-power scenarios with minimal heat dissipation, while the switching regulator efficiently powers the controller and fan in high-power scenarios. Although a solar panel's voltage does not change much even at varying light levels, it can drop significantly as soon as current is drawn. Without the LDO, this could lead to oscillations, where the switching regulator could be cycling on and off as the voltage fluctuates. Using both the LDO and the switching regulator optimizes efficiency, minimizes heat, and allows reliable operation across variable solar conditions.</li><br>
     
     <li><strong>Why was an 11V start voltage chosen for the fan, and why does it stop at 4V?</strong><br>
-    The 11V start threshold ensures that the switching regulator and LDO can always supply at least that voltage. It also strikes a balance between the time it would take to wait for a usable charge of the super capacitors, and how long allows the super capacitors to keep the fan running. The fan stops at 4V to prevent stalling with a little margin, as P12 fans stall at ~3.5V and produces minimal air pressure between 3.5V and 4V.</li><br>
+    The 11V start threshold ensures that the switching regulator and LDO can always supply at least that voltage. It also strikes a balance between the time it would take to wait for a usable charge of the super capacitors, and how long allows the super capacitors to keep the fan running. The fan stops at 4V to prevent stalling with a little margin, because  P12 fans stall at ~3.5V and produces minimal air pressure between 3.5V and 4V.</li><br>
     
     <li><strong>Why not use a battery instead of capacitors?</strong><br>
     Super capacitors are ideal for rapid and frequent charge and discharge cycles without degradation, making them better suited than batteries for handling variable solar input and a wide range of operating temperatures. In contrast, many rechargeable batteries cannot reliably operate at -20°C and degrade faster with every charge cycle. Super capacitors also allow the fan to operate frequently, even in low or indirect light, rather than waiting for a usable battery charge. Frequent operation is often more desirable than infrequent (but longer) cycles in regards to ventilation.</li><br>
