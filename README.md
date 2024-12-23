@@ -5,7 +5,7 @@
 
 Feature highlights:
 * Low-light operation / assisted fan start
-* Adjustable max fan speed - PWM duty cycle calculated on the basis of available voltage and desired fan speed
+* Adjustable fan speed - PWM duty cycle calculated on the basis of available voltage and desired fan speed
 * Directly connect 1 or 2 fans (designed for 3-pin or 4-pin 12V PC fans)
 * LDO / switch mode combo power regulation for efficient power conditioning
 * Easy assembly in standard enclosure

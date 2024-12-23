@@ -146,16 +146,13 @@ byte getOptimalDutyCycle() {
     // There is no way to reach max speed at less than full voltage, so there is no ramp up/down noise concern here
     // Instead, we enter "Adaptive mode" where we try to adjust the duty cycle to maintain operation above fanOnVoltageThreshold, since lower duty cycle is more efficient than letting the voltage drop
     // Fan speed might fluctuate wildly, but it there is a bigger chance that the fan will keep running, and it will run as fast as possible
-    byte averageVoltage = getlatestVoltageMeasurementsAverage();
     if (voltage12VRail > fanOnVoltageThreshold) {
-      if (averageVoltage > voltage12VRail) {  // below average
-        decreseDutyCycle();
+      if (getlatestVoltageMeasurementsAverage() > voltage12VRail) {  // below average
         decreseDutyCycle();
       } else {  // above or equal to average
         increaseDutyCycle();
       }
     } else {
-      decreseDutyCycle();
       decreseDutyCycle();
     }
   } else if (voltage12VRail >= minimumVoltageForPWM) {
@@ -183,8 +180,11 @@ void increaseDutyCycle() {
 }
 
 void decreseDutyCycle() {
-  if (dutyCycle > 32) {
-    dutyCycle--;
+  byte minimumDutyCycleAtVoltage = pgm_read_byte(&minimumDutyCycle[voltage12VRail - fanOffVoltageThreshold]);
+  if (dutyCycle > minimumDutyCycleAtVoltage) {
+    dutyCycle-=2;
+  } else {
+    dutyCycle = minimumDutyCycleAtVoltage;
   }
 }
 
@@ -195,8 +195,7 @@ byte readADC_8bit(byte ADmuxPin) {
   ADMUX = (ADMUX & 0xF0) + ADmuxPin;
   _delay_us(10);
   ADCSRA |= 1 << ADSC;
-  while (ADCSRA & _BV(ADSC))
-    ;
+  while (ADCSRA & _BV(ADSC));
   sei();
   return (ADC >> 2) & 0xFF;
 }

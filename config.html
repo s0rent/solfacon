@@ -400,7 +400,7 @@ In the code, set "lowPowerOperationEnabled" to false.<br>
 Option A: A hole can be drilled in the enclosure wall directly across from where the U-shaped indent in the PCB will be located once the PCB is seated. After seating the PCB, you can secure the cables using a cable tie screwed into the enclosure mounting hole at the indent.<br>
 Option B: You can also drill 8mm or 10mm holes left of "POWER" (rotate the screw terminal 180 degrees when assembling the PCB!) and right of "FAN1" (place the fan header at FAN2 when assembling the PCB!), and glue on M8 or M10 nylon cable glands for power and fan cables.</p>
 <p class="showif-cfg_on-off">
-Place the unassembled PCB backside up in the enclosure lid, and make a mark through the whole labelled "5mm". Drill a 5mm hole here and mount the on/off toggle switch here when you are done drilling all the enclosure holes. The on/off positions of the switch can be any which way you prefer (up, down, left right). Attach a wire to the centre pin and another wire to one of the two other pins of the switch. Attach the other ends of the wires to pin header S1-A (short end).
+Place the unassembled PCB backside up in the enclosure lid, and make a mark through the hole labelled "5mm". Drill a 5mm hole here and mount the on/off toggle switch here when you are done drilling all the enclosure holes. The on/off positions of the switch can be any which way you prefer (up, down, left right). Attach a wire to the centre pin and another wire to one of the two other pins of the switch. Attach the other ends of the wires to pin header S1-A (short end).
 </p>
 <p class="showif-cfg_max-speed">
 Place the unassembled PCB backside up in the enclosure lid, and make a mark through the wholes labelled "7mm" and "3mm". Drill holes of the specified diameter here and mount the rotary potentiometer when you are done drilling all the enclosure holes. Attach a wire to each of the potentiometer's three solder lugs, and attach the other ends of the wires to pin header RV1-A (short end). The wires should be attached to both the potentiometer and the pin header in the same order - do not move or "twist" them. 
@@ -650,6 +650,31 @@ function generateArray(voltageSlope, PWMCurve, minPwmVoltage, minPwmSpeed, maxPw
     return res;
 }
 
+function generateMinimumDutyCycleArray(voltageSlope, PWMCurve, minPwmVoltage, minRpm) {
+    const voltageScale = 128;
+    const dutyCycleScale = 160;
+    const rpmStep = (128 - minPwmSpeed)/64;
+    let array = [];
+
+    for (let voltageLevel = minPwmVoltage; voltageLevel < voltageScale; voltageLevel++) {
+        let row = [];
+        let availableVoltage = voltageLevel / voltageScale;
+
+        let targetRPM = minRpm / 128;
+
+        let dutyCycle = PWMCurve.k * (1 - Math.sqrt(1 - (PWMCurve.t * targetRPM) / (voltageSlope.a * availableVoltage + voltageSlope.b)));
+
+        let scaledDutyCycle = Math.round(dutyCycle * dutyCycleScale);
+        scaledDutyCycle = Math.max(0, Math.min(dutyCycleScale, scaledDutyCycle));
+
+        array.push((Math.min(160,(isNaN(scaledDutyCycle) ? dutyCycleScale : scaledDutyCycle))+'').padStart(3));
+    }
+
+    let res = `\n\n\/\/ For adaptive mode: Minimum duty cycle to keep the fan spinning\n const byte minimumDutyCycle[${array.length}] PROGMEM = `;
+    res += "{" + array.join(", ") + "};";
+    return res;
+}
+
 function calculateFanCurve() {
     const voltageDividerRatio = 7.06666666666667;
     
@@ -692,7 +717,7 @@ function calculateFanCurve() {
 
     document.getElementById('fan-curve-equation').innerHTML = 'Equation:<br>'+`DutyCycle = ${PWMCurve.k} * (1 - Math.sqrt(1 - (${PWMCurve.t} * TargetRPM / (${voltageSlope.a} * Available_voltage + ${voltageSlope.b}))))`;
     document.getElementById('fan-curve-error').innerHTML = 'Equation estimation error (0 to 0.01 is ideal):<br>' + PWMCurve.error + (PWMCurve.error === 0 ? ' <span class="note">(NAILED IT!)</span>':'');
-    document.getElementById('duty-cycle-array').value = constants + generateArray(voltageSlope, PWMCurve, minPwmVoltage, minPwmSpeed, maxPwmSpeed);
+    document.getElementById('duty-cycle-array').value = constants + generateArray(voltageSlope, PWMCurve, minPwmVoltage, minPwmSpeed, maxPwmSpeed) + generateMinimumDutyCycleArray(voltageSlope, PWMCurve, fanOffVoltage, 37);
 }
 </script>
 </body>
