@@ -18,12 +18,12 @@ Please read through the whole page before you start assembling the controller. I
     <tr>
         <td><input id="cfg_protection-diode" type="checkbox" checked></td>
         <td class="config-item-name"><label for="cfg_protection-diode">Reverse polarity protection</label></td>
-        <td class="config-item-info">Protect the controller from damage from reverse polarity, e.g. if the positive and negative leads from the solar panel are switched by mistake. Increases the power consumption a little.</td>
+        <td class="config-item-info">Protect the controller from damage from reverse polarity, e.g. if the positive and negative leads of the solar panel are switched by mistake. Increases the power consumption a little.</td>
     </tr>
     <tr>
         <td><input id="cfg_max-speed" type="checkbox" checked></td>
-        <td class="config-item-name"><label for="cfg_max-speed">Fan max speed adjustment</label></td>
-        <td class="config-item-info">A dial to set a maximum fan speed, to reduce noise or power consumption when/if needed. Without this the fan always run at the maximum possible speed. Only works with 4-pin fans.</td>
+        <td class="config-item-name"><label for="cfg_max-speed">Fan speed adjustment</label></td>
+        <td class="config-item-info">A dial to set a stable maximum fan speed, to reduce noise or power consumption when/if needed. Without this the fan always run at the maximum possible speed. Only works with 4-pin fans.</td>
     </tr>
     <tr>
         <td><input id="cfg_low-power" type="checkbox" checked></td>
@@ -32,14 +32,14 @@ Please read through the whole page before you start assembling the controller. I
     </tr>
     <tr>
         <td><input id="cfg_two-fans" type="checkbox" checked></td>
-        <td class="config-item-name"><label for="cfg_two-fans">Connect two fans</label></td>
-        <td class="config-item-info">An extra fan header to connect a second fan to the fan controller.</td>
+        <td class="config-item-name"><label for="cfg_two-fans">Directly connect two fans</label></td>
+        <td class="config-item-info">An extra fan header to connect a second fan to the fan controller. Alternatively daisy chaining is also possible.</td>
     </tr>
 </table>
 
 
 <h2>Components</h2>
-You can choose to use alternative components to the ones listed here, for instance if you have similar parts available. Pay attention to the dimensions of the components - especially the height if you plan to mount the PCB in an F19 enclosure.
+You can choose to use alternative components to the ones listed here, for instance if you have similar parts available. Pay attention to the width and pitch dimensions of the components - and especially the height if you plan to mount the PCB in an F19 enclosure.
 
 <table id="component-list">
     <tr>
@@ -61,7 +61,7 @@ You can choose to use alternative components to the ones listed here, for instan
         <td>Electrolytic capacitor</td>
         <td>390uF</td>
         <td>RF1V391MP30820E</td>
-        <td>Voltage rating should be higher than the open circuit voltage of the solar panel with some margin. For a 22V solar panel, use 35V or above. Cold temperatures can increase the open circuit voltage substantially.</td>
+        <td>Voltage rating should be higher than the open circuit voltage of the solar panel with some margin. For a 22V solar panel, use 35V or above. Note that low temperatures can increase the open circuit voltage substantially.</td>
     </tr>
     <tr>
         <td>C2, C6</td>
@@ -94,9 +94,9 @@ You can choose to use alternative components to the ones listed here, for instan
     <tr class="showif-cfg_low-power">
         <td>C7, C8</td>
         <td>Super capacitor</td>
-        <td>0.6F</td>
-        <td>CZP-8R1L604R-TW</td>
-        <td>The PCB is compatible with super capacitors with 13.5mm and 20.5mm pitch. These two capacitors MUST be identical, or stability and durability can easily be compromised. Replacements should consider the following: physical size (width, depth, and height), unbalanced voltage rating, maximum peak and endurance current (experienced during charging and discharging). Smaller capacitors tend to be rated for less current, but can be a more economical option for single fan use.</td>
+        <td>1F</td>
+        <td>CZP-8R1L105R-TW</td>
+        <td>The PCB is compatible with super capacitors with 13.5mm and 20.5mm pitch. These two capacitors MUST be identical, or stability and durability can easily be compromised. Replacements should consider the following: physical size (width, depth, and height), unbalanced voltage rating (as these will be in an unbalanced configuration), maximum peak and endurance current (experienced during charging and discharging). Smaller capacitors tend to be rated for less current, but can be a more economical option for single fan use.</td>
     </tr>
     <tr>
         <td>C9</td>
@@ -118,7 +118,7 @@ You can choose to use alternative components to the ones listed here, for instan
         <td>-</td>
         <td>STPS3L60Q</td>
         <td>Replacing these diodes requires some consideration.<br>
-        D2: The forward voltage drop should be small, or the body diode of Q1 will not let LDO1 supply LDO2 / MCU exclusively.<br>
+        D2: The forward voltage drop should be small, or the body diode of Q1 will not let LDO1 supply LDO2 (and the MCU) exclusively.<br>
         D3: The forward voltage drop of D3 should be equal to or slightly higher than D2. It should have low reverse leakage to protect SR1 and to prevent slight charging of the gates of Q1 and Q2.<br>
         It could be tempting to use SB140 diodes (cheaper, and identical to <span class="showif-cfg_low-power">D4 and </span>D5), but they leak a little too much.</td>
     </tr>
@@ -155,7 +155,7 @@ You can choose to use alternative components to the ones listed here, for instan
         <td>Microcontroller</td>
         <td>ATtiny85</td>
         <td>ATTINY85-20PU</td>
-        <td>Must be flashed before assembly! Can be socketed. ATtiny45 and ATtiny25 can also be used with minor code modifications - The data table containing PWM for a given voltage and target speed would not fit into the flash memory of these chips. You either have to modify the table such that it becomes small enough to fit or remove it entirely. If removed, the max fan speed adjustment feature will not work, but if you do not want that anyway, you may save a few cents on a cheaper MCU.</td>
+        <td>Must be flashed before assembly! Use a socket if you would like to modify/update the firmware later on. ATtiny45 and ATtiny25 can also be used with minor code modifications - The data table containing PWM for a given voltage and target speed would not fit into the flash memory of these chips. You either have to modify the table such that it becomes small enough to fit or remove it entirely. If removed, the max fan speed adjustment feature will not work, but if you do not want that anyway, you may save a few cents on a cheaper MCU.</td>
     </tr>
     <tr>
         <td>Q1</td>
@@ -267,7 +267,7 @@ You can choose to use alternative components to the ones listed here, for instan
         <td>Screw terminal</td>
         <td>-</td>
         <td>-</td>
-        <td>For connecting the leads from the solar panel.</td>
+        <td>For connecting the leads from the solar panel. If you want the cable to enter the enclosure sideways (i.e. with a cable gland), rotate it 180 degrees.</td>
     </tr>
     <tr class="showif-cfg_on-off">
         <td>S1</td>
@@ -356,7 +356,7 @@ In the code, set "lowPowerOperationEnabled" to false.<br>
 <div class="showif-cfg_max-speed"><br>
     <input type="checkbox" id="cfg_custom-fan"><label for="cfg_custom-fan">I want to calculate my own fan curve table (for instance if using another 4-pin fan than an Arctic P12)</label>
     <div class="showif-cfg_custom-fan">
-        <p>The fan curve model is not very accurate for fan speeds below ~33%, but maintains good accuracy at static air flow restrictions (ducts, filters, insect nets, grilles, etc). The fan speed / voltage relationship is simplified as being linear, which is not entirely accurate at low voltages or at very high speeds where the air provides some resistance, but it is usually decent enough.<br>
+        <p>Three RPM measurements at different speeds and PWM duty cycles is needed to calculate a new fan model. The fan speed / voltage relationship is simplified as being linear, which is not entirely accurate at low voltages or at very high speeds where the air provides some resistance, but it is usually decent enough.<br>
         </p><br>
         RPM measurement at 100% duty cycle and 12V:<br>
         <input type="number" id="100-100" value="1880"><br>
@@ -394,21 +394,21 @@ In the code, set "lowPowerOperationEnabled" to false.<br>
 
 <h2>Assembly instructions</h2>
 <h3>Enclosure (only applicable for F19 and F19-1 enclosures)</h3>
-<p>For all holes, use drill bits for metal and do not use drill bits meant for wood or masonry. Securely fasten the enclosure parts that you intend to drill in before commencing. Drill at somewhat high RPM but proceed only slowly through the material - remove only very little material at the time and do not let the material heat up. Wet drilling can be preferable if your enclosure is made of polycarbonate, as mechanical stress and heat can make it shatter.</p>
+<p>For all holes, use sharp drill bits for plastics or metal and do not use drill bits meant for wood or masonry. Securely fasten the enclosure parts that you intend to drill in before commencing. Drill at somewhat high RPM but proceed only slowly through the material - remove only very little material at the time and do not let the material heat up. Be especially careful if your enclosure is made of polycarbonate, as mechanical stress and heat can make it shatter.</p>
 
 <p>Drill one or two holes for the cables to the fan<span class="showif-cfg_two-fans">s</span> and the solar panel.<br>
-Option A: A hole can be drilled in the enclosure wall directly across from where the U-shaped indent in the PCB will be located once the PCB is seated. After seating the PCB, you can secure the cables using a cable tie screwed into the enclosure mounting hole at the indent.<br>
+Option A: A hole can be drilled in the enclosure wall directly across from where the U-shaped indent in the PCB will be located once the PCB is seated. After seating the PCB, you can secure the cables using a cable tie screwed into the enclosure mounting hole at the indent. An M12 cable gland can be glued on, but may obstruct the mounting ear if you need it.<br>
 Option B: You can also drill 8mm or 10mm holes left of "POWER" (rotate the screw terminal 180 degrees when assembling the PCB!) and right of "FAN1" (place the fan header at FAN2 when assembling the PCB!), and glue on M8 or M10 nylon cable glands for power and fan cables.</p>
 <p class="showif-cfg_on-off">
 Place the unassembled PCB backside up in the enclosure lid, and make a mark through the hole labelled "5mm". Drill a 5mm hole here and mount the on/off toggle switch here when you are done drilling all the enclosure holes. The on/off positions of the switch can be any which way you prefer (up, down, left right). Attach a wire to the centre pin and another wire to one of the two other pins of the switch. Attach the other ends of the wires to pin header S1-A (short end).
 </p>
 <p class="showif-cfg_max-speed">
-Place the unassembled PCB backside up in the enclosure lid, and make a mark through the wholes labelled "7mm" and "3mm". Drill holes of the specified diameter here and mount the rotary potentiometer when you are done drilling all the enclosure holes. Attach a wire to each of the potentiometer's three solder lugs, and attach the other ends of the wires to pin header RV1-A (short end). The wires should be attached to both the potentiometer and the pin header in the same order - do not move or "twist" them. 
+Place the unassembled PCB backside up in the enclosure lid, and make a mark through the wholes labelled "7mm" and "3mm". Drill holes of the specified diameter here and mount the rotary potentiometer when you are done drilling all the enclosure holes. Attach a wire to each of the potentiometer's three solder lugs, and attach the other ends of the wires to pin header RV1-A (short end). The wires should be attached to both the potentiometer and the pin header in the same order - do not move, rotate or "twist" them. 
 </p>
 <br>
 <h3>PCB</h3>
 <center><img src="pcb_examples.jpg" style="width:800px"><p class="note">PCBs for two different configurations</p></center><br>
-Assembly of the PCB is straight forward, just solder the components onto the PCB at the designated locations. The silk screen print should face upwards when done. Mind component orientation, vertical/horizontal components, and seat components as close to the PCB surface as possible to ensure enclosure lid clearance.
+Assembly of the PCB is straight forward, just solder the components onto the PCB at the designated locations. Mind component orientation, vertical/horizontal components, and seat components as close to the PCB surface as possible to ensure enclosure lid clearance.
 <div>Based on your configuration, do note the following:
 <ul>
     <li class="hideif-cfg_protection-diode">Bridge D1 using a staple jumper wire or similar.</li>
@@ -422,8 +422,8 @@ Assembly of the PCB is straight forward, just solder the components onto the PCB
 <h3>Final touches</h3>
 <center><img src="enclosure_example2.jpg" style="width:400px"><p class="note">Enclosure with transparent lid</p></center><br>
 <p>Screw the assembled PCB into the enclosure and mount the enclosure on the wall (optional).</p>
-<p>Female MOLEX fan connectors can easily be taken apart (non destructively) such that they are easier to get though holes. On the back side of the female fan connector, there are little slots in the plastic through which metal clips can be seen. Using a needle or another pointy object, gently push down on the tiny clip and pull one wire out at the time. Run the wires through the hole in the enclosure and re-attach the plastic part of the connector. Be sure to attach the wires in the same position as they were.</p>
-<p>Connect the wires from the solar panel to the POWER screw terminal, but do not expose the solar panel to light. <span class="showif-cfg_max-speed">Connect the potentiometer by connecting RV1 to RV1-A.</span> <span class="showif-cfg_on-off">Connect the on/off switch by connecting S1 to S1-A.</span> Make sure that everything is connected correctly, and carefully place the lid on the enclosure. Let light hit the solar panel and the fan<span class="showif-cfg_two-fans">s</span> should spin up in a few seconds.</p>
+<p>Female MOLEX fan connectors can easily be taken apart (non destructively) such that they are easier to get though holes. On the back side of the female fan connector, there are small slots in the plastic through which metal clips can be seen. Using a needle or another pointy object, gently push down on the tiny clip and pull one wire out at the time. Run the wires through the hole in the enclosure and re-attach the plastic part of the connector. Be sure to attach the wires in the same positions.</p>
+<p>Connect the wires for the solar panel to the POWER screw terminal, but do not connect the solar panel yet or do not expose it to light. <span class="showif-cfg_max-speed">Connect the potentiometer by connecting RV1 to RV1-A.</span> <span class="showif-cfg_on-off">Connect the on/off switch by connecting S1 to S1-A.</span> Make sure that everything is connected correctly, and carefully place the lid on the enclosure. Connect the solar panel and let light hit the solar panel and the fan<span class="showif-cfg_two-fans">s</span> should spin up in a few seconds.</p>
 </div>
 <style>
 * {
